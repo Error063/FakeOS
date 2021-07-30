@@ -2,7 +2,7 @@
 A fake operating system powered by Python
 # Where is the source code
 Path: filesytem->root
-#How it works
+# How it works
 There is a schematic diagram
 ![](https://ftp.bmp.ovh/imgs/2021/07/02ceba7a06dd7cee.jpg)
 # How to make the application for it
