@@ -21,5 +21,5 @@ def commandline(username):
                     print(item)
             continue
         threadmanager.createThread(appList=program_avgrs)
-        time.sleep(0.01)
+        time.sleep(0.1)
         continue
