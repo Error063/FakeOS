@@ -9,5 +9,6 @@ e.g.:
 def app(list):#'list' is the argument of the application, only receive list type data
     dosomething
 ```
-#How it work
+#How it works
+
 ![](https://ftp.bmp.ovh/imgs/2021/07/02ceba7a06dd7cee.jpg)
