@@ -54,7 +54,7 @@ def killThread(pid):
         threaddb["total"] += 1
         threaddb.sync()
         threaddb.close()
-        eval("_async_raise(" + "program" + str(pid) + ".ident, SystemExit)")
+        exec("_async_raise(" + "program" + str(pid) + ".ident, SystemExit)")
 
 
 def app(list):
