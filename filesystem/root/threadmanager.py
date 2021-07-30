@@ -1,6 +1,8 @@
 import ctypes
 import inspect
-import launchup,shelve,threading,pprint
+import launchup, shelve, threading, pprint
+
+
 def _async_raise(tid, exctype):
     tid = ctypes.c_long(tid)
     if not inspect.isclass(exctype):
@@ -11,22 +13,28 @@ def _async_raise(tid, exctype):
     elif res != 1:
         ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
         raise SystemError("PyThreadState_SetAsyncExc failed")
+
+
 def addThreadList(appname):
-    threaddb=shelve.open("../../system/thread")
-    threadNumber=threaddb["total"]
-    threaddb["total"]=threadNumber+1
-    threaddb["list"].update({threaddb["total"]:{"pid":threaddb["total"],"appName":appname,"status":"live"}})
+    threaddb = shelve.open("../../system/thread")
+    threadNumber = threaddb["total"]
+    threaddb["total"] = threadNumber + 1
+    threaddb["list"].update({threaddb["total"]: {"pid": threaddb["total"], "appName": appname, "status": "live"}})
     threaddb.sync()
     threaddb.close()
-    return threadNumber+1
+    return threadNumber + 1
+
+
 def createThread(appList):
-    appName=appList[0]
-    pid=str(addThreadList(appName))
-    exec('program'+pid+"=threading.Thread(target=launchup.launchup, args="+str(appList)+")")
-    exec("program"+pid+".start()")
+    appName = appList[0]
+    pid = str(addThreadList(appName))
+    exec('program' + pid + "=threading.Thread(target=launchup.launchup, args=" + str(appList) + ")")
+    exec("program" + pid + ".start()")
+
+
 def getThreadList(pid):
     threaddb = shelve.open("../../system/thread")
-    if pid==None:
+    if pid == None:
         pprint.pprint(threaddb["list"])
     else:
         try:
@@ -34,20 +42,32 @@ def getThreadList(pid):
         except BaseException:
             print("Error pid")
     threaddb.close()
+
+
 def killThread(pid):
-    threaddb=shelve.open("../../system/thread")
+    threaddb = shelve.open("../../system/thread")
     try:
         del threaddb["list"][pid]
     except BaseException:
         print("Error pid")
     else:
-        threaddb["total"]+=1
+        threaddb["total"] += 1
         threaddb.sync()
         threaddb.close()
-        eval("_async_raise("+"program"+str(pid)+".ident, SystemExit)")
+        eval("_async_raise(" + "program" + str(pid) + ".ident, SystemExit)")
+
+
 def app(list):
-    if list[1]=='get':
-        if len(list)==2:
+    if list[1] == 'get':
+        if len(list) == 2:
             getThreadList(None)
         else:
             getThreadList(list[2])
+
+
+class info:
+    appVersion = '0.0.1'
+    appBuild = '1'
+    appAuthor = 'Error063'
+    appCompany = 'Example Company'
+    createTime = 1627625284
