@@ -1,2 +1,2 @@
-def app(avgrs):
+def app(list):
     print("hello world")
